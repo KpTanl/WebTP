@@ -1,0 +1,54 @@
+body {
+    background-color: #CBD18F;
+    border: 3px solid #3A6B35;
+    margin: 1% 10%;
+    padding: 1% 2%;
+    font-family: sans-serif;
+}
+
+
+html {
+    background-color: #E3B448;
+}
+
+h1 {
+    border-bottom: 1px solid #3A6B35;
+    margin-top: 30px;
+    font-size: 2em;
+    font-family: serif;
+    font-weight: normal;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+
+h2 {
+    color: #3A6B35;
+    font-size: 1em;
+}
+
+footer {
+    color: grey;
+    font-size: 0.7em;
+    margin-bottom: 10px;
+    font-weight: lighter;
+}
+
+.ville {
+    font-weight: bold;
+}
+
+.ville ul li {
+    font-weight: normal;
+}
+
+
+.image-redimensionner {
+    width: 200px;
+    margin: 10px;
+}
+
+.logo-centre {
+    display: block;
+    margin: auto;
+}

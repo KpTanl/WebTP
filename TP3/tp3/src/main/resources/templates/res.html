@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Result</title>
+    <title lang="fr">Resultat</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <h1>Result</h1>
+    <p>Lower: <span th:text="${lower}"></span></p>
+    <p>Upper: <span th:text="${upper}"></span></p>
+    <table>
+        <tr>
+            <th th:text="${Lower}"></th>
+            <th th:text="${Upper}"></th>
+        </tr>
+        <tr th:each="result : ${results}">
+            <td th:text="${result.number}"></td>
+            <td th:text="${result.square}"></td>
+        </tr>
+    </table>
+</body>
+</html>

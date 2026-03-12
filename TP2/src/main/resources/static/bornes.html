@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saisie des bornes</title>
+</head>
+<body>
+    <h2> EX3 : Saisie des bornes </h2>
+    <p> Entrez les bornes pour générer un nombre aléatoire entre les deux bornes </p>
+    <br>
+    <form action="/hello/bornes" method="GET">
+        <label for="borne_inf   ">Entrez la borne inférieure :</label>
+        <input type="number" name="borne_inf" id="borne_inf" required>
+        <br>
+        <label for="borne_sup">Entrez la borne supérieure :</label>
+        <input type="number" name="borne_sup" id="borne_sup" required>
+        <br>
+        <button type="submit">Envoyer</button>
+    </form>
+</body>
+</html>
