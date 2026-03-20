@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reservation</title>
+</head>
+<body>
+    <div th:if="${user != null}">
+        <p>Bonjour <span th:text="${user}"></span></p>
+        <a href="/resa/logout">Déconnexion</a>
+    </div>
+
+    <h1>Toutes les reservations</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Nombre de personnes</th>
+                <th>Date de reservation</th>
+                <th>Destination</th>
+                <th>Nom</th>
+                <th>Email</th>
+                <th>Paiement</th>
+                <th>Iban</th>
+                <th>Offres</th>
+                <th>Conditions</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="reservation,iterStat : ${reservations}">
+                <td><span th:each="i: ${#numbers.sequence(1, reservation.nbPersonnes)}">🧑</span></td>
+                <td th:text="${reservation.dateReservation}"></td>
+                <td><img th:src="@{'/img/' + ${reservation.destination} + '.png'}" width="100" height="100">
+                    <span th:text="${reservation.destination}"></span></td>
+                <td th:text="${reservation.nom}"></td>
+                <td th:text="${reservation.email}"></td>
+                <td th:text="${reservation.paiement}"></td>
+                <td th:if="${reservation.paiement == 'virement'}" th:text="${reservation.iban}"></td>
+                <td th:unless="${reservation.paiement == 'virement'}"></td>
+                <td th:text="${reservation.offres}"></td>
+                <td th:text="${reservation.conditions}"></td>
+                <td>
+                    <a th:href="@{'/resa/delete/' + ${iterStat.index}}">Supprimer</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

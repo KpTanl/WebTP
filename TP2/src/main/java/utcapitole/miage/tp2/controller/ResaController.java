@@ -7,8 +7,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import utcapitole.miage.tp2.model.Reservation;
+import org.springframework.ui.Model;
 
+import utcapitole.miage.tp2.model.Reservation;
+import jakarta.servlet.http.HttpSession;
+
+import org.springframework.web.bind.annotation.PathVariable;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,8 +21,23 @@ import org.springframework.web.bind.annotation.RequestBody;
 @Controller
 public class ResaController {
     @RequestMapping("/resa/")
-    public String index() {
-        return "redirect:/resa/index.html";
+    public String index(HttpSession session, Model model) {
+        String user = (String) session.getAttribute("user");
+        model.addAttribute("user", user);
+        return "index";
+    }
+
+    @PostMapping("/resa/login")
+    public String login(@RequestParam("username") String username, HttpSession session) {
+        session.setAttribute("user", username);
+        return "redirect:/resa/";
+    }
+
+    @GetMapping("/resa/logout")
+    public String logout(HttpSession session) {
+        session.removeAttribute("user");
+        reservations.clear();
+        return "redirect:/resa/";
     }
 
     private static List<Reservation> reservations = new ArrayList<>();
@@ -42,14 +61,22 @@ public class ResaController {
                 isOffres, isConditions);
         reservations.add(reservation);
 
-        return "redirect:/resa/confirmation.html";
+        return "redirect:/resa/all";
     }
 
     @GetMapping("/resa/all")
-    @ResponseBody
-    public List<Reservation> getAllReservations() {
-        return reservations;
+    public String getAllReservations(Model model, HttpSession session) {
+        String user = (String) session.getAttribute("user");
+        model.addAttribute("user", user);
+        model.addAttribute("reservations", reservations);
+        return "reservation";
     }
     
-
+    @GetMapping("/resa/delete/{index}")
+    public String deleteReservation(@PathVariable ("index") int index) {
+        if (index >= 0 && index < reservations.size()) {
+            reservations.remove(index);
+        }
+        return "redirect:/resa/all";
+    }
 }
