@@ -5,24 +5,25 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import miage.spring.demo.model.Conference;
-import miage.spring.demo.model.jpa.ConferenceService;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import miage.spring.demo.model.Conference;
+import miage.spring.demo.model.User;
+import miage.spring.demo.model.jpa.ConferenceService;
+import miage.spring.demo.model.jpa.UserService;
 
 @Controller
 public class ConferenceController {
-    
+
     private ConferenceService conferenceService;
-    
+    private UserService userService;
+
     @Autowired
-    public ConferenceController(ConferenceService conferenceService) {
-    this.conferenceService = conferenceService;
-}
+    public ConferenceController(ConferenceService conferenceService, UserService userService) {
+        this.conferenceService = conferenceService;
+        this.userService = userService;
+    }
 
     @GetMapping("/")
     public String MenuConferences(Model model) {
@@ -30,42 +31,58 @@ public class ConferenceController {
     }
 
     @PostMapping("/conferences/add")
-    public String addConference(@ModelAttribute("conference") Conference conference, Model model) {
+    public String addConference(@ModelAttribute("conference") Conference conference,
+            @RequestParam("organizerId") Long organizerId, Model model) {
+        User organizer = userService.findById(organizerId);
+        if (organizer == null) {
+            model.addAttribute("conferences", conferenceService.findAll());
+            model.addAttribute("message", "Ajout impossible : organisateur introuvable");
+            return "resultConference";
+        }
+        conference.setOrganizer(organizer);
         conferenceService.addConference(conference);
         model.addAttribute("conferences", conferenceService.findAll());
-        model.addAttribute("message", "Conférence ajoutée avec succès");
+        model.addAttribute("message", "Conference ajoutee avec succes");
         return "resultConference";
     }
 
     @GetMapping("/conferences/all")
     public String listConferences(Model model) {
         model.addAttribute("conferences", conferenceService.findAll());
-        model.addAttribute("message", "Conférences trouvées avec succès");
+        model.addAttribute("message", "Conferences trouvees avec succes");
         return "allConference";
     }
 
     @PostMapping("/conferences/search")
-    public String searchConference(@RequestParam("idconf") Long idconf, Model model) {
-        model.addAttribute("conferences", conferenceService.findById(idconf));
-        model.addAttribute("message", "Résultat de la recherche:");
+    public String searchConference(@RequestParam("titleconf") String titleconf, Model model) {
+        int matches = conferenceService.findByTitleconf(titleconf).size();
+        model.addAttribute("conferences", conferenceService.findAll());
+        model.addAttribute("message", "Resultat de la recherche pour \"" + titleconf + "\" : " + matches
+                + " conference(s) trouvee(s)");
         return "resultConference";
     }
-    
+
     @PostMapping("/conferences/delete")
     public String deleteConference(@RequestParam("idconf") Long idconf, Model model) {
         conferenceService.deleteById(idconf);
         model.addAttribute("conferences", conferenceService.findAll());
-        model.addAttribute("message", "Conférence supprimée avec succès");
+        model.addAttribute("message", "Conference supprimee avec succes");
         return "resultConference";
     }
-    
+
     @PostMapping("/conferences/update")
-    public String updateConference(@ModelAttribute("conference") Conference conference, Model model) {
+    public String updateConference(@ModelAttribute("conference") Conference conference,
+            @RequestParam("organizerId") Long organizerId, Model model) {
+        User organizer = userService.findById(organizerId);
+        if (organizer == null) {
+            model.addAttribute("conferences", conferenceService.findAll());
+            model.addAttribute("message", "Modification impossible : organisateur introuvable");
+            return "resultConference";
+        }
+        conference.setOrganizer(organizer);
         conferenceService.updateConference(conference);
         model.addAttribute("conferences", conferenceService.findAll());
-        model.addAttribute("message", "Conférence modifiée avec succès");
+        model.addAttribute("message", "Conference modifiee avec succes");
         return "resultConference";
     }
-    
-    
 }

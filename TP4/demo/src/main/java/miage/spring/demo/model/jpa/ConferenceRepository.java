@@ -9,7 +9,7 @@ import miage.spring.demo.model.Conference;
 
 @Repository
 public interface ConferenceRepository extends JpaRepository<Conference, Long> {
-    Conference findBytitleconf(String titleconf);
+    List<Conference> findByTitleconf(String titleconf);
 
 
 }

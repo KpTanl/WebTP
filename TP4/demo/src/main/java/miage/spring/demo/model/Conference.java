@@ -32,8 +32,8 @@ public class Conference {
     @ManyToMany(mappedBy = "conferencesParticipated")
     private Set<User> participants = new HashSet<>();
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "user_id", nullable = false)
     private User organizer;
 
     
@@ -97,6 +97,22 @@ public class Conference {
 
     public void setUrlwebsiteconf(String urlwebsiteconf) {
         this.urlwebsiteconf = urlwebsiteconf;
+    }
+
+    public User getOrganizer() {
+        return organizer;
+    }
+
+    public void setOrganizer(User organizer) {
+        this.organizer = organizer;
+    }
+
+    public Set<User> getParticipants() {
+        return participants;
+    }
+
+    public void setParticipants(Set<User> participants) {
+        this.participants = participants;
     }
 
 } 

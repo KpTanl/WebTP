@@ -22,8 +22,20 @@
                 <td th:text="${user.id}"></td>
                 <td th:text="${user.username}"></td>
                 <td th:text="${user.email}"></td>
-                <td th:text="${user.conferencesOrganized}"></td>
-                <td th:text="${user.conferencesParticipated}"></td>
+                <td>
+                    <span th:if="${#lists.isEmpty(user.conferencesOrganized)}">Aucune</span>
+                    <ul th:if="${!#lists.isEmpty(user.conferencesOrganized)}">
+                        <li th:each="conference : ${user.conferencesOrganized}"
+                            th:text="${conference.titleconf + ' (' + conference.dtstartconf + ' - ' + conference.dtendconf + ')'}"></li>
+                    </ul>
+                </td>
+                <td>
+                    <span th:if="${#sets.isEmpty(user.conferencesParticipated)}">Aucune</span>
+                    <ul th:if="${!#sets.isEmpty(user.conferencesParticipated)}">
+                        <li th:each="conference : ${user.conferencesParticipated}"
+                            th:text="${conference.titleconf + ' (' + conference.dtstartconf + ' - ' + conference.dtendconf + ')'}"></li>
+                    </ul>
+                </td>
             </tr>
         </tbody>
     </table>

@@ -22,6 +22,10 @@ public class ConferenceService {
         return conferenceRepository.findAll();
     }
 
+    public List<Conference> findByTitleconf(String titleconf) {
+        return conferenceRepository.findByTitleconf(titleconf);
+    }
+
     public Conference addConference(Conference conference) {
         return conferenceRepository.save(conference);
     }

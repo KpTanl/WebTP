@@ -2,28 +2,30 @@
 <html lang="fr" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Toutes les conférences</title>
+    <title>Toutes les conferences</title>
 </head>
 <body>
-    <h1>Toutes les conférences</h1>
+    <h1>Toutes les conferences</h1>
 
     <p th:text="${message}"></p>
 
-    <p>Toutes les conférences ci-dessous:</p>
+    <p>Toutes les conferences ci-dessous:</p>
     <table border="1">
         <tr>
             <th>ID</th>
             <th>Titre</th>
-            <th>Date de début</th>
+            <th>Date de debut</th>
             <th>Date de fin</th>
             <th>Nombre de participants</th>
+            <th>Organiser</th>
         </tr>
         <tr th:each="c : ${conferences}">
             <td th:text="${c.idconf}"></td>
             <td th:text="${c.titleconf}"></td>
             <td th:text="${c.dtstartconf}"></td>
             <td th:text="${c.dtendconf}"></td>
-            <td th:text="${c.participants.size()}"></td>
+            <td th:text="${#sets.size(c.participants)}"></td>
+            <td th:text="${c.organizer != null ? c.organizer.username : 'Aucun'}"></td>
         </tr>
     </table>
 
