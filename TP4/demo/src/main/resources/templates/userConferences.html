@@ -2,32 +2,69 @@
 <html lang="fr" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Conférences de l'utilisateur</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Espace utilisateur</title>
 </head>
 <body>
-    <h1 th:text="'Conférences de ' + ${user.username}">Conférences</h1>
-    <p th:text="'Email: ' + ${user.email}"></p>
+    <h1 th:text="|Espace de ${user.username}|">Espace utilisateur</h1>
+    <p th:text="${message}"></p>
+    <p th:text="|Email : ${user.email}|"></p>
+    <p th:text="${'Statut : ' + (user.status != null ? user.status.nomStatut : 'Aucun')}"></p>
+
+    <h2>Conférences organisées</h2>
     <table border="1">
         <thead>
             <tr>
                 <th>ID</th>
-                <th>Titre de la conférence</th>
+                <th>Titre</th>
                 <th>Date de début</th>
                 <th>Date de fin</th>
+                <th>URL</th>
             </tr>
         </thead>
         <tbody>
-            <tr th:each="conf : ${conferences}">
-                <td th:text="${conf.idconf}"></td>
-                <td th:text="${conf.titleconf}"></td>
-                <td th:text="${conf.dtstartconf}"></td>
-                <td th:text="${conf.dtendconf}"></td>
+            <tr th:each="conference : ${organizedConferences}">
+                <td th:text="${conference.idconf}"></td>
+                <td th:text="${conference.titleconf}"></td>
+                <td th:text="${conference.dtstartconf}"></td>
+                <td th:text="${conference.dtendconf}"></td>
+                <td th:text="${conference.urlwebsiteconf}"></td>
             </tr>
-            <tr th:if="${#lists.isEmpty(conferences)}">
-                <td colspan="4">Aucune conférence trouvée pour cet utilisateur.</td>
+            <tr th:if="${#lists.isEmpty(organizedConferences)}">
+                <td colspan="5">Aucune conférence organisée.</td>
             </tr>
         </tbody>
     </table>
-    <a href="/">Retour au menu</a>
+
+    <h2>Conférences auxquelles il participe</h2>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Titre</th>
+                <th>Date de début</th>
+                <th>Date de fin</th>
+                <th>Organisateur</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="conference : ${participatedConferences}">
+                <td th:text="${conference.idconf}"></td>
+                <td th:text="${conference.titleconf}"></td>
+                <td th:text="${conference.dtstartconf}"></td>
+                <td th:text="${conference.dtendconf}"></td>
+                <td th:text="${conference.organizer != null ? conference.organizer.username : 'Aucun'}"></td>
+            </tr>
+            <tr th:if="${#lists.isEmpty(participatedConferences)}">
+                <td colspan="5">Aucune participation enregistrée.</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <form th:if="${sessionMode}" action="/users/logout" method="post">
+        <button type="submit">Se déconnecter</button>
+    </form>
+
+    <p><a href="/menu">Retour au menu</a></p>
 </body>
 </html>

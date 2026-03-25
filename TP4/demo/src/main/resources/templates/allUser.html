@@ -3,18 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Tous les utilisateurs</title>
 </head>
 <body>
     <h1>Tous les utilisateurs</h1>
+    <p th:text="${message}"></p>
     <table border="1">
         <thead>
             <tr>
                 <th>ID</th>
                 <th>Nom</th>
                 <th>Email</th>
-                <th>Conférences organisées</th>
-                <th>Conférences participées</th>
+                <th>Statut</th>
+                <th>Conferences organisees</th>
+                <th>Conferences participees</th>
             </tr>
         </thead>
         <tbody>
@@ -22,6 +24,7 @@
                 <td th:text="${user.id}"></td>
                 <td th:text="${user.username}"></td>
                 <td th:text="${user.email}"></td>
+                <td th:text="${user.status != null ? user.status.nomStatut : 'Aucun'}"></td>
                 <td>
                     <span th:if="${#lists.isEmpty(user.conferencesOrganized)}">Aucune</span>
                     <ul th:if="${!#lists.isEmpty(user.conferencesOrganized)}">
@@ -39,5 +42,7 @@
             </tr>
         </tbody>
     </table>
+    <br>
+    <a href="/menu">Retour au menu</a>
 </body>
 </html>

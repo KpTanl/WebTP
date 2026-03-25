@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Toutes les thematiques</title>
+</head>
+<body>
+    <h1>Toutes les thematiques</h1>
+    <p th:text="${message}"></p>
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>Nom</th>
+        </tr>
+        <tr th:each="thematique : ${thematiques}">
+            <td th:text="${thematique.idThematique}"></td>
+            <td th:text="${thematique.nomThematique}"></td>
+        </tr>
+    </table>
+    <br>
+    <a href="/menu">Retour au menu</a>
+</body>
+</html>

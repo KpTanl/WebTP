@@ -2,26 +2,25 @@
 <html lang="fr" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Résultat</title>
+    <title>Resultat utilisateur</title>
 </head>
 <body>
-    <h1>Résultat</h1>
-
+    <h1>Resultat utilisateur</h1>
     <p th:text="${message}"></p>
-
-    <p>Toutes les Users ci-dessous:</p>
     <table border="1">
         <tr>
             <th>ID</th>
             <th>Nom</th>
             <th>Email</th>
-            <th>Conférences organisées</th>
-            <th>Conférences participées</th>
+            <th>Statut</th>
+            <th>Conferences organisees</th>
+            <th>Conferences participees</th>
         </tr>
         <tr th:each="u : ${users}">
             <td th:text="${u.id}"></td>
             <td th:text="${u.username}"></td>
             <td th:text="${u.email}"></td>
+            <td th:text="${u.status != null ? u.status.nomStatut : 'Aucun'}"></td>
             <td>
                 <span th:if="${#lists.isEmpty(u.conferencesOrganized)}">Aucune</span>
                 <ul th:if="${!#lists.isEmpty(u.conferencesOrganized)}">
@@ -38,8 +37,7 @@
             </td>
         </tr>
     </table>
-
     <br>
-    <a href="/menu.html">Retour au menu</a>
+    <a href="/menu">Retour au menu</a>
 </body>
 </html>

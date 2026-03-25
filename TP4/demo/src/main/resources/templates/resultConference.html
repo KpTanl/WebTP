@@ -2,14 +2,11 @@
 <html lang="fr" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Resultat</title>
+    <title>Resultat conference</title>
 </head>
 <body>
-    <h1>Resultat</h1>
-
+    <h1>Resultat conference</h1>
     <p th:text="${message}"></p>
-
-    <p>Toutes les conferences ci-dessous:</p>
     <table border="1">
         <tr>
             <th>ID</th>
@@ -18,7 +15,8 @@
             <th>Date debut</th>
             <th>Date fin</th>
             <th>URL</th>
-            <th>Organiser</th>
+            <th>Organisateur</th>
+            <th>Thematiques</th>
         </tr>
         <tr th:each="c : ${conferences}">
             <td th:text="${c.idconf}"></td>
@@ -28,10 +26,15 @@
             <td th:text="${c.dtendconf}"></td>
             <td th:text="${c.urlwebsiteconf}"></td>
             <td th:text="${c.organizer != null ? c.organizer.username : 'Aucun'}"></td>
+            <td>
+                <span th:if="${#sets.isEmpty(c.thematiques)}">Aucune</span>
+                <ul th:if="${!#sets.isEmpty(c.thematiques)}">
+                    <li th:each="thematique : ${c.thematiques}" th:text="${thematique.nomThematique}"></li>
+                </ul>
+            </td>
         </tr>
     </table>
-
     <br>
-    <a href="/menu.html">Retour au menu</a>
+    <a href="/menu">Retour au menu</a>
 </body>
 </html>

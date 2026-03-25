@@ -6,30 +6,37 @@
 </head>
 <body>
     <h1>Toutes les conferences</h1>
-
     <p th:text="${message}"></p>
-
-    <p>Toutes les conferences ci-dessous:</p>
     <table border="1">
         <tr>
             <th>ID</th>
             <th>Titre</th>
+            <th>Edition</th>
             <th>Date de debut</th>
             <th>Date de fin</th>
+            <th>URL</th>
             <th>Nombre de participants</th>
-            <th>Organiser</th>
+            <th>Organisateur</th>
+            <th>Thematiques</th>
         </tr>
         <tr th:each="c : ${conferences}">
             <td th:text="${c.idconf}"></td>
             <td th:text="${c.titleconf}"></td>
+            <td th:text="${c.nbeditionconf}"></td>
             <td th:text="${c.dtstartconf}"></td>
             <td th:text="${c.dtendconf}"></td>
+            <td th:text="${c.urlwebsiteconf}"></td>
             <td th:text="${#sets.size(c.participants)}"></td>
             <td th:text="${c.organizer != null ? c.organizer.username : 'Aucun'}"></td>
+            <td>
+                <span th:if="${#sets.isEmpty(c.thematiques)}">Aucune</span>
+                <ul th:if="${!#sets.isEmpty(c.thematiques)}">
+                    <li th:each="thematique : ${c.thematiques}" th:text="${thematique.nomThematique}"></li>
+                </ul>
+            </td>
         </tr>
     </table>
-
     <br>
-    <a href="/menu.html">Retour au menu</a>
+    <a href="/menu">Retour au menu</a>
 </body>
 </html>

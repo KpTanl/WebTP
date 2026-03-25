@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajouter une conférence</title>
+</head>
+<body>
+    <h1>Ajouter une conférence</h1>
+    <p>Sélectionnez un organisateur et au moins une thématique.</p>
+
+    <p th:if="${#lists.isEmpty(users)}">Ajoutez d'abord un utilisateur avant de créer une conférence.</p>
+    <p th:if="${#lists.isEmpty(thematiques)}">Ajoutez d'abord une thématique avant de créer une conférence.</p>
+
+    <form action="/conferences/add" method="post">
+        <label for="nom">Nom :</label>
+        <input type="text" id="nom" name="nom" required>
+        <br>
+        <label for="titleconf">Titre :</label>
+        <input type="text" id="titleconf" name="titleconf" required>
+        <br>
+        <label for="nbeditionconf">Numéro d'édition :</label>
+        <input type="number" id="nbeditionconf" name="nbeditionconf" min="1" required>
+        <br>
+        <label for="dtstartconf">Date de début :</label>
+        <input type="date" id="dtstartconf" name="dtstartconf" required>
+        <br>
+        <label for="dtendconf">Date de fin :</label>
+        <input type="date" id="dtendconf" name="dtendconf" required>
+        <br>
+        <label for="urlwebsiteconf">URL du site web :</label>
+        <input type="url" id="urlwebsiteconf" name="urlwebsiteconf" required>
+        <br>
+        <label for="organizerId">Organisateur :</label>
+        <select id="organizerId" name="organizerId" required>
+            <option value="">Choisissez un organisateur</option>
+            <option th:each="user : ${users}"
+                    th:value="${user.id}"
+                    th:text="${user.username + ' (' + user.email + ')'}"></option>
+        </select>
+        <br>
+        <label for="thematiqueIds">Thématiques :</label>
+        <select id="thematiqueIds" name="thematiqueIds" multiple size="5" required>
+            <option th:each="thematique : ${thematiques}"
+                    th:value="${thematique.idThematique}"
+                    th:text="${thematique.nomThematique}"></option>
+        </select>
+        <br>
+        <button type="submit"
+                th:disabled="${#lists.isEmpty(users) or #lists.isEmpty(thematiques)}">Ajouter</button>
+    </form>
+
+    <p><a href="/thematiques/all">Voir les thématiques existantes</a></p>
+    <p><a href="/users/all">Voir les utilisateurs existants</a></p>
+    <p><a href="/menu">Retour au menu</a></p>
+</body>
+</html>

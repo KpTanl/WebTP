@@ -11,5 +11,11 @@ import miage.spring.demo.model.Conference;
 public interface ConferenceRepository extends JpaRepository<Conference, Long> {
     List<Conference> findByTitleconf(String titleconf);
 
+    List<Conference> findByTitleconfContainingIgnoreCase(String titleconf);
 
+    List<Conference> findByOrganizer_Id(Long organizerId);
+
+    List<Conference> findByParticipants_Id(Long userId);
+
+    List<Conference> findByThematiques_IdThematique(Long idThematique);
 }

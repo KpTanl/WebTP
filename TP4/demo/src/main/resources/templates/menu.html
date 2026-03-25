@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu</title>
+</head>
+<body>
+    <h1>Menu des conferences</h1>
+    <ul>
+        <li><a href="/conferences/add/form">Ajouter une conference</a></li>
+        <li><a href="/searchConference.html">Rechercher une conference</a></li>
+        <li><a href="/deleteConference.html">Supprimer une conference</a></li>
+        <li><a href="/conferences/update/form">Modifier une conference</a></li>
+        <li><a href="/conferences/all">Afficher toutes les conferences</a></li>
+    </ul>
+
+    <h1>Menu des utilisateurs</h1>
+    <ul>
+        <li><a href="/users/add/form">Ajouter un utilisateur</a></li>
+        <li><a href="/searchUser.html">Rechercher un utilisateur</a></li>
+        <li><a href="/deleteUser.html">Supprimer un utilisateur</a></li>
+        <li><a href="/users/update/form">Modifier un utilisateur</a></li>
+        <li><a href="/users/all">Afficher tous les utilisateurs</a></li>
+        <li><a href="/searchUserConferences.html">Voir les conferences d'un utilisateur</a></li>
+        <li th:if="${session.connectedUserId == null}"><a href="/users/login">Se connecter</a></li>
+        <li th:if="${session.connectedUserId != null}"><a href="/users/me/conferences">Voir mon espace utilisateur</a></li>
+        <li><a href="/addParticipation.html">Inscrire un utilisateur a une conference</a></li>
+    </ul>
+
+    <h1>Donnees de reference</h1>
+    <ul>
+        <li><a href="/addStatus.html">Ajouter un statut</a></li>
+        <li><a href="/statuses/all">Afficher tous les statuts</a></li>
+        <li><a href="/addThematique.html">Ajouter une thematique</a></li>
+        <li><a href="/thematiques/all">Afficher toutes les thematiques</a></li>
+    </ul>
+
+    <form th:if="${session.connectedUserId != null}" action="/users/logout" method="post">
+        <button type="submit">Se deconnecter</button>
+    </form>
+</body>
+</html>

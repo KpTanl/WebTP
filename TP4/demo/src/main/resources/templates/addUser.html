@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajouter un utilisateur</title>
+</head>
+<body>
+    <h1>Ajouter un utilisateur</h1>
+    <p>Renseignez un email unique. Le mot de passe sera hashé côté serveur.</p>
+    <form action="/users/add" method="post">
+        <label for="username">Nom :</label>
+        <input type="text" id="username" name="username" required>
+        <br>
+        <label for="email">Email :</label>
+        <input type="email" id="email" name="email" required>
+        <br>
+        <label for="password">Mot de passe :</label>
+        <input type="password" id="password" name="password" required>
+        <br>
+        <label for="statusId">Statut :</label>
+        <select id="statusId" name="statusId" required>
+            <option value="">Choisissez un statut</option>
+            <option th:each="status : ${statuses}"
+                    th:value="${status.codeStatut}"
+                    th:text="${status.nomStatut}"></option>
+        </select>
+        <br>
+        <button type="submit">Ajouter</button>
+    </form>
+    <p><a href="/statuses/all">Voir les statuts existants</a></p>
+    <p><a href="/menu">Retour au menu</a></p>
+</body>
+</html>
