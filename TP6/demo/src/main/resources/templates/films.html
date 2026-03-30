@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Films populaires</title>
+</head>
+
+<body>
+    <h1>Films populaires</h1>
+    <p>
+        <a th:href="@{/favorites}">Mes favoris</a>&nbsp;&nbsp;
+        <a th:href="@{/watchlist}">Ma liste a voir</a>
+    </p>
+    <h3>
+        Page : <span th:text="${filmPage.page}"></span>
+        / <span th:text="${filmPage.totalPages}"></span>
+    </h3>
+    <table border="1">
+        <tr>
+            <th>Affiche</th>
+            <th>Titre</th>
+            <th>Date de sortie</th>
+            <th>Note</th>
+        </tr>
+        <tr th:each="film : ${films}">
+            <td>
+                <img th:if="${film.posterPath != null}"
+                     th:src="@{|https://image.tmdb.org/t/p/w200${film.posterPath}|}"
+                     th:alt="${film.title}"
+                     style="width: 90px; height: auto; border-radius: 6px;">
+            </td>
+            <td style="font-size: 1.2em; margin-right: 1em;">
+                <a th:href="@{/films/{id}(id=${film.id})}" th:text="${film.title}"></a>
+            </td>
+            <td th:text="${film.releaseDate}"></td>
+            <td th:text="${#numbers.formatDecimal(film.voteAverage, 1, 2)}"></td>
+        </tr>
+    </table>
+    <br>
+    <hr>
+    <div style="font-size: 1.1em; text-align: center;">
+        <a th:if="${filmPage.page > 1}" th:href="@{/films(page=${filmPage.page - 1})}" style="margin-right: 1em;">
+            Page precedente
+        </a>
+
+        <a th:if="${filmPage.page < filmPage.totalPages}" th:href="@{/films(page=${filmPage.page + 1})}">
+            Page suivante
+        </a>
+    </div>
+</body>
+
+</html>
