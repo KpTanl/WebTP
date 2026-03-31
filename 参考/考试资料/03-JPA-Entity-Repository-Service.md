@@ -69,7 +69,7 @@ public class AppMemberEntity {
 
 ## 12. 一对多、多对一、多对多怎么建
 
-### 多对一
+### 多对一(数量方向与E/A图相反)
 
 ```java
 @ManyToOne
